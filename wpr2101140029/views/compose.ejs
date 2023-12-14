@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email</title>
+  <link rel="icon" href="https://img.icons8.com/?size=48&id=EgRndDDLh8kS&format=png"/>
+  <link rel="stylesheet" href="./css/compose.css">
+</head>
+<body>
+  <div class="tab">
+    <nav>
+      <ul>
+        <li>Welcome, <%= username %> | <a href="/signout" style="color: red;">Sign out</a></li>
+        <li><a href="/compose" class="link">Compose</a></li>
+        <li><a href="/inbox" class="link">Inbox</a></li>
+        <li><a href="/outbox" class="link">Outbox</a></li>
+      </ul>
+    </nav>
+  </div>
+
+
+
+  
+  <form action="/compose" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+    <p id="errorMessage"></p>
+    <label for="recipientSelect">Choose user:</label>
+    <select name="receiver_id" id="recipientSelect" >
+      <option value="" disabled selected>Select recipient</option>
+      <% results.forEach((user) => { %>
+        <option value="<%= user.id %>"><%= user.email %></option>
+      <% }); %>
+    </select>
+    <label for="subjectInput">Subject:</label>
+    <input type="text" id="subjectInput" name="title" placeholder="(no subject)">
+    <br>
+    <label for="bodyTextarea">Body:</label>
+    <textarea id="bodyTextarea" name="content"></textarea>
+    <br>
+    <label for="fileInput">Attachment:</label>
+    <input type="file" id="fileInput" name="file" >
+    <br>
+    <button type="submit">Send</button>
+  </form>
+
+<script>
+  function validateForm() {
+    var recipientSelect = document.getElementById('recipientSelect');
+    var errorMessage = document.getElementById('errorMessage');
+
+    if (recipientSelect.value === '') {
+      errorMessage.innerHTML = 'Please select a recipient.';
+      return false;
+    } else {
+      errorMessage.innerHTML = '';
+      return true;
+    }
+  }
+</script>
+
+</body>
+</html>
+
+    
+    
+    
+    
+  

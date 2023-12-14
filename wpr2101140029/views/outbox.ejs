@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email</title>
+  <link rel="icon" href="https://img.icons8.com/?size=48&id=EgRndDDLh8kS&format=png" />
+  <link rel="stylesheet" href="./css/inbox.css" />
+</head>
+<body>
+  <div class="tab">
+    <nav>
+      <ul>
+        <li>
+          Welcome, <%= username %> |
+          <a href="/signout" style="color: red">Sign out</a>
+        </li>
+        <li><a href="/compose" class="link">Compose</a></li>
+        <li><a href="/inbox" class="link">Inbox</a></li>
+        <li><a href="/outbox" class="link">Outbox</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="tabcontent">
+    <form id="deleteForm">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>To</th>
+            <th>Sent at</th>
+            <th>Subject</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% emails.forEach((email) => { %>
+          <tr data-email-id="<%= email.id %>">
+            <td>
+              <input
+                type="checkbox"
+                name="selectedEmails"
+                value="<%= email.id %>"
+              />
+            </td>
+            <td>
+              <% const recipientFullName = email.recipient_full_name || 'Unknown'; %>
+              <%= recipientFullName %>
+            </td>
+            <td><%= new Date(email.timeSent).toLocaleString() %></td>
+            <td>
+              <a href="/email/<%= email.id %>">
+                <%= email.title || '(no subject)' %>
+              </a>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <div>
+        <button type="button" onclick="deleteSelectedEmails()">Delete</button>
+      </div>
+    </form>
+    <div class="pagination">
+      <a href="/outbox?pag=<%= Math.max(currentPage - 1, 1) %>" class="arrow"
+        >&laquo;</a
+      >
+      <% for (let i = 1; i <= totalPages; i++) { %>
+      <a
+        href="/outbox?pag=<%= i %>"
+        class="<%= currentPage === i ? 'active' : '' %>"
+        ><%= i %></a
+      >
+      <% } %>
+      <a
+        href="/outbox?pag=<%= Math.min(currentPage + 1, totalPages) %>"
+        class="arrow"
+        >&raquo;</a
+      >
+    </div>
+  </div>
+
+  <script>
+    function deleteSelectedEmails() {
+      const form = document.getElementById("deleteForm");
+      const selectedEmails = Array.from(form.elements.selectedEmails)
+        .filter((checkbox) => checkbox.checked)
+        .map((checkbox) => checkbox.value);
+
+      if (selectedEmails.length === 0) {
+        alert("Please select at least one email to delete.");
+        return;
+      }
+
+      // Assuming your server has an API endpoint for deleting emails
+      const apiUrl = "/api/delete-outbox-emails";
+
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ emailIds: selectedEmails }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              `Failed to delete emails. Status: ${response.status}`
+            );
+          }
+          return response.text(); // Assuming the server sends an empty response (204 No Content)
+        })
+        .then((data) => {
+          // If the response is not empty, you may want to handle it accordingly
+          console.log("Server response:", data);
+          // Remove the deleted emails from the table
+          selectedEmails.forEach((emailId) => {
+            const emailRow = document.querySelector(`tr[data-email-id="${emailId}"]`);
+            if (emailRow) {
+              emailRow.remove();
+            }
+          });
+        })
+        .catch((error) => {
+          console.error("Error deleting emails:", error.message);
+          alert("An error occurred. Please try again.");
+        });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+body {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  .tab {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    width: 20%; /* Adjusted width */
+    height: 100vh; /* Full height of the viewport */
+  }
+  
+  /* Style the buttons that are used to open the tab content */
+  .tab .link {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 22px 16px;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab .link:hover {
+    background-color: #ddd;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    float: left;
+    padding: 20px; /* Padding for the content */
+    border: 1px solid #ccc;
+    width: 80%; /* Adjusted width */
+    border-left: none;
+    height: 100vh; /* Full height of the viewport */
+  }
+  /* Table styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  /* Table header */
+  thead {
+    background-color: #4caf50;
+    color: #fff;
+  }
+  /* Alternate row background color for tbody */
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  /* Border between table rows */
+  tbody tr {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Padding and text alignment for table cells */
+  td, th {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  /* Form button styling */
+  form button {
+    margin: 10px auto; /* Center the button horizontally */
+    padding: 10px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block; /* Make it a block-level element to center vertically */
+  }
+  
+  /* Button hover effect */
+  form button:hover {
+    background-color: #cc0000;
+  }
+  
+  /* Arrow styling */
+  .arrow {
+    font-size: 20px;
+    text-decoration: none;
+    color: #333;
+    margin: 0 5px;
+  }
+  
+  /* Active page link styling */
+
+  
+  /* Header styling */
+  div > h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .header-content {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  /* Navigation styling */
+  nav {
+    margin-top: 20px;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: center; /* Center the navigation items */
+  }
+  
+  nav li {
+    display: block; /* Display items vertically */
+    margin-bottom: 10px; /* Add spacing between items */
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 18px;
+    display: block; /* Display items vertically */
+  }
+
+  .pagination {
+    margin: 20px auto; /* Center the pagination horizontally */
+    text-align: center;
+  }
+  
+  .pagination a {
+    color: black;
+    float: none; /* Remove float for centering */
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+  }
+  
+  .pagination a.active {
+    background-color: dodgerblue;
+    color: white;
+  }
+  
+  .pagination a:hover:not(.active) {
+    background-color: #ddd;
+  }
+  
